@@ -8,8 +8,6 @@
             <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12 capitalize">
                 <li><a class="hover:text-green-400" href="/">Home</a></li>
                 <li><a class="hover:text-green-400" href="{{ route('places.index') }}">Places</a></li>
-                <li><a class="hover:text-green-400" href="#">Gallery</a></li>
-                <li><a class="hover:text-green-400" href="#">guides visitor</a></li>
             </ul>
             <!-- Header Icons -->
             <div class="hidden md:flex items-center space-x-5 ">
@@ -17,8 +15,9 @@
                 @if (Auth::user())
                     <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar"
                         class="mr-3 flex items-center w-full md:w-auto ">
-                        <div class=" bg-green-400 rounded-full" style="width: 35px; height: 35px">
-                            <img class="rounded-full" src="https://randomuser.me/api/portraits/women/45.jpg"
+                        <h1 class="mr-2 text-ld font-bold">{{ Auth::user()->username }}</h1>
+                        <div class=" bg-green-400 rounded-full " style="width: 45px; height: 45px">
+                            <img class="rounded-full" src="https://randomuser.me/api/portraits/men/50.jpg"
                                 alt="">
                         </div>
                     </button>
