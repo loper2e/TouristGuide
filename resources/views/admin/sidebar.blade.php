@@ -21,11 +21,11 @@
             </a>
         </li>
         <li>
-            <a href="{{ route('admin.show', 'admins') }}"
+            <a href="{{ route('admin.show', 'users') }}"
                 class="flex flex-row items-center h-12 transform hover:translate-x-2 transition-transform ease-in duration-200 text-gray-500 hover:text-green-400">
                 <span class="inline-flex items-center justify-center h-12 w-12 text-lg text-gray-400"><i
                         class="bx bx-group"></i></span>
-                <span class="text-sm font-medium">Admins</span>
+                <span class="text-sm font-medium">Users</span>
             </a>
         </li>
         <div class="text-sm font-light tracking-wide text-gray-500 ml-4">Settings</div>

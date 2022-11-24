@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\place;
 use App\Models\favoritelist;
-
+use App\Models\review;
 
 class adminController extends Controller
 {
@@ -17,7 +18,21 @@ class adminController extends Controller
      */
     public function index()
     {
-        return view('admin.dashboard' , ['pages' => 'dashboard' , 'usercount' => User::count() , 'placescount' => place::count() ,'userslistcount' => favoritelist::count()]);
+       if (Auth::check()) {
+        if (Auth::user()->role == "admin") {
+            $data = array(
+                'usercount' => User::count(),
+                'placescount' => place::count(),
+                'favoritelistcount' => favoritelist::count(),
+                'reviewcount' => review::count(),
+            );
+            return view('admin.dashboard' , ['pages' => 'dashboard' , 'data' => $data ]);
+           } else {
+            return redirect('/');
+           }
+       } else {
+        return redirect()->back();
+       }
     }
 
     /**
@@ -58,14 +73,10 @@ class adminController extends Controller
                 $places = place::all();
             }
 
-            $users = array();
-            foreach ($places as $place) {
-                $finduser = User::find($place['user_id']);
-                if ($finduser) {
-                    array_push( $users , $finduser);
-                }
-            }
-            return view('admin.dashboard' , ['pages' => $pages , 'places' => $places , 'users' => $users]);
+            return view('admin.dashboard' , ['pages' => $pages , 'places' => $places]);
+        } else if ($pages == 'users') {
+            $users = user::all();
+            return view('admin.dashboard' , ['pages' => $pages , 'users' => $users]);
         }
     }
 

@@ -16,8 +16,9 @@ return new class extends Migration
         Schema::create('favoritelists', function (Blueprint $table) {
             $table->id();
             $table->integer('place_id')->unsigned();
-            $table->integer('user_id');
+            $table->integer('user_id')->unsigned();
             $table->foreign('place_id')->references('id')->on('places')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

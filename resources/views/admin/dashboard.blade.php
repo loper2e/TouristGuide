@@ -36,7 +36,8 @@
         </div>
         <div class="w-full overflow-hidden overflow-y-scroll">
             @switch($pages)
-                @case('admins')
+                @case('users')
+                    @include('admin.pages.userspage')
                 @break
 
                 @case('places')

@@ -8,6 +8,11 @@
             <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12 capitalize">
                 <li><a class="hover:text-green-400" href="/">Home</a></li>
                 <li><a class="hover:text-green-400" href="{{ route('places.index') }}">Places</a></li>
+                @if (Auth::user())
+                    @if (Auth::user()->role == 'admin')
+                        <li><a class="hover:text-green-400" href="{{ route('admin.index') }}">Admin</a></li>
+                    @endif
+                @endif
             </ul>
             <!-- Header Icons -->
             <div class="hidden md:flex items-center space-x-5 ">
@@ -78,6 +83,12 @@
 
                     <ul class="px-8 relative pb-5">
                         <h1>User Route </h1>
+                        @if (Auth::user()->role == 'admin')
+                            <li class=" text-gray-900 text-md py-2"><a class="flex items-center hover:text-green-400"
+                                    href="{{ route('admin.index') }}">
+                                    <i class="bx bx-heart text-xl mr-5"></i>Admin</a>
+                            </li>
+                        @endif
                         <li class=" text-gray-900 text-md py-2"><a class="flex items-center hover:text-green-400"
                                 href="{{ route('favorites.index') }}">
                                 <i class="bx bx-heart text-xl mr-5"></i>Favorite</a>

@@ -70,7 +70,7 @@ class userController extends Controller
     public function show($id)
     {
         Auth::logout();
-        return redirect(url()->previous());
+        return redirect('/');
     }
 
 
@@ -88,6 +88,8 @@ class userController extends Controller
 
     public function destroy($id)
     {
-        //
+        $user = user::find($id);
+        $user->delete();
+        return redirect()->back();
     }
 }
