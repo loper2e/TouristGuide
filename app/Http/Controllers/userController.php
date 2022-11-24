@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Stevebauman\Location\Facades\Location;
 
 class userController extends Controller
 {
@@ -49,6 +50,8 @@ class userController extends Controller
                 'username' => ['required' , 'unique:users,username,expect,id' ],
                 'email' => ['required' , 'email' , 'unique:users,email,expect,id' ],
                 'password' => ['required' , 'min:8'  ],
+                'gender' => ['required'],
+                'country' => ['required'],
                 'confirmPassword' => ['required' , 'same:password'],
             ]
         );

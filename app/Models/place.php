@@ -25,4 +25,20 @@ class place extends Model
         'user_name',
     ];
 
+    public function review(){
+        return $this->hasMany('review');
+    }
+    public function favorite(){
+        return $this->hasMany('favoritelist');
+    }
+
+    public static function boot() {
+        parent::boot();
+
+        static::deleting(function($review) {
+            review::where('place_id', $review->id)->delete();
+            favoritelist::where('place_id', $review->id)->delete();
+        });
+    }
+
 }

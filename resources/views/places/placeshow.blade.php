@@ -153,9 +153,9 @@
                                 @if ($i == 1)
                                     <i class="bx bxs-star pr-1 text-yellow-500"
                                         onclick="{starRate({{ $i - 1 }})}"><input checked id="star"
-                                            type="radio" hidden name="rating" value="{{ $i }}" /></i>
+                                            type="radio" hidden name="rate" value="{{ $i }}" /></i>
                                 @else
-                                    <i class="bx bxs-star pr-1 " onclick="{starRate({{ $i - 1 }})}"><input checked
+                                    <i class="bx bxs-star pr-1 " onclick="{starRate({{ $i - 1 }})}"><input
                                             id="star" type="radio" hidden name="rate"
                                             value="{{ $i }}" /></i>
                                 @endif
@@ -181,45 +181,48 @@
 
 
             @if ($userReview != null)
-                <form class="px-5 w-full h-full pb-5 md:w-[900px] mt-10 rounded-lg bg-green-100 p-5" method="POST"
-                    action="{{ route('reviews.update', $userReview['id']) }}">
-                    @csrf
-                    @method('PATCH')
-                    <h1 class="text-center font-bold text-xl capitalize">Your review</h1>
-                    <div class="flex items-center mb-4 space-x-4">
-                        <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-5.jpg"
-                            alt="">
-                        <div>
-                            <p class="text-xl capitalize p-0">{{ $userReview['username'] }}</p>
-                            <p class="text-gray-400 text-sm">{{ $userReview['created_at'] }}</p>
+                <div class="relative">
+                    <form class="px-5 w-full h-full pb-5 md:w-[900px] mt-10 rounded-lg bg-green-100 p-5" method="POST"
+                        action="{{ route('reviews.update', $userReview['id']) }}">
+                        @csrf
+                        @method('PATCH')
+                        <h1 class="text-center font-bold text-xl capitalize">Your review</h1>
+                        <div class="flex items-center mb-4 space-x-4">
+                            <img class="w-10 h-10 rounded-full" src="{{ $userReview['userimage'] }}" alt="">
+                            <div>
+                                <p class="text-xl capitalize p-0">{{ $userReview['username'] }}</p>
+                                <p class="text-gray-400 text-sm">{{ $userReview['created_at'] }}</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="flex items-center mb-1 text-gray-400">
-                        @for ($i = 1; $i <= 5; $i++)
-                            <i class="bx bxs-star pr-1 {{ $userReview['rate'] >= $i ? 'text-yellow-500' : '' }}"
-                                onclick="{estarRate({{ $i - 1 }})}"><input id="estar" type="radio" hidden
-                                    name="rate" value="{{ $i }}" /></i>
-                        @endfor
-                        <button type="button" onclick="{ estarRate({!! $userReview['rate'] - 1 !!})}"
-                            class="px-2 text-sm text-center text-gray-700 rounded-full">
-                            Reset
+                        <div class="flex items-center mb-1 text-gray-400">
+                            @for ($i = 1; $i <= 5; $i++)
+                                <i class="bx bxs-star pr-1 {{ $userReview['rate'] >= $i ? 'text-yellow-500' : '' }}"
+                                    onclick="{estarRate({{ $i - 1 }})}"><input id="estar" type="radio" {{ $userReview['rate'] == $i ? 'checked' : '' }}
+                                        hidden name="rate" value="{{ $i }}" /></i>
+                            @endfor
+                            <button type="button" onclick="{ estarRate({!! $userReview['rate'] - 1 !!})}"
+                                class="px-2 text-sm text-center text-gray-700 rounded-full">
+                                Reset
+                            </button>
+                        </div>
+                        <div class="mb-5 text-sm text-gray-700 ">
+                            <p>From <span class="uppercase">{{ $userReview['country'] }}</span>
+
+                            </p>
+                        </div>
+                        <div class="px-4 pt-5 pb-5 bg-white rounded-t-lg h-full">
+                            <textarea name="content" required class="w-full h-64 outline-none px-0 text-sm text-gray-900 bg-white "
+                                placeholder="Write a Review...">{{ $userReview['content'] }}</textarea>
+                        </div>
+
+                        <button type="submit"
+                            class=" mt-4 py-2 px-4 text-md font-bold text-center text-white bg-green-400 hover:bg-green-500 rounded-full">
+                            Update Review
                         </button>
-                    </div>
-                    <div class="mb-5 text-sm text-gray-700 ">
-                        <p>Reviewed in the <span class="uppercase">{{ $userReview['country'] }}</span>
 
-                        </p>
-                    </div>
-                    <div class="px-4 pt-5 pb-5 bg-white rounded-t-lg h-full">
-                        <textarea name="content" required class="w-full h-64 outline-none px-0 text-sm text-gray-900 bg-white "
-                            placeholder="Write a Review...">{{ $userReview['content'] }}</textarea>
-                    </div>
-                    <button type="submit"
-                        class=" mt-4 py-2 px-4 text-md font-bold text-center text-white bg-green-400 hover:bg-green-500 rounded-full">
-                        Update Review
-                    </button>
 
-                    <form action="{{ route('reviews.destroy' , $userReview['id']) }}" method="POST">
+                    </form>
+                    <form class="absolute bottom-5 left-44" action="{{ route('reviews.destroy', $userReview['id']) }}" method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit"
@@ -227,8 +230,7 @@
                             Delete
                         </button>
                     </form>
-
-                </form>
+                </div>
             @endif
 
             @if (!isset($reviews[0]))

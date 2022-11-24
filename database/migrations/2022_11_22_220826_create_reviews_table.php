@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
-            $table->integer('place_id');
+            $table->integer('place_id')->unsigned();
             $table->integer('user_id');
             $table->longText('content');
             $table->string('username');
@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('userimage');
             $table->integer('rate');
             $table->timestamps();
+            $table->foreign('place_id')->references('id')->on('places')->onDelete('cascade');
+
         });
     }
 
