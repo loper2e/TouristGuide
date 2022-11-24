@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\place;
+use App\Models\review;
 use App\Models\favoritelist;
 
 class placeController extends Controller
@@ -86,16 +87,29 @@ class placeController extends Controller
     public function show($id)
     {
 
-        $favoritelists = array();
+
+
+        $favoritelist = null;
+        $userReview = null ;
        if (Auth::check()) {
-            $lists = favoritelist::where('user_id' , '=' , Auth::user()->id)->get();
-            foreach ($lists as $list) {
-                array_push($favoritelists , $list['place_id']);
+            $lists = favoritelist::where('user_id' , '=' , Auth::user()->id)->where('place_id' , '=' , $id)->get();
+
+            if (isset($lists[0])) {
+               $favoritelist = $lists[0];
             }
+
+            $userReviews = review::where('user_id' ,'=' , Auth::user()->id)->where('place_id' , '=' , $id)->get();
+            
+            if (isset($userReviews[0])) {
+                $userReview = $userReviews[0];
+            }
+        
+            $reviews = review::where('place_id' , '=' , $id)->where('user_id' , '!=' , Auth::user()->id)->get();
         };
 
+        $reviews = review::where('place_id' , '=' , $id)->get();
         $place = place::find($id);
-        return view('places.placeshow' , ['place' => $place , 'favoritelists' => $favoritelists] );
+        return view('places.placeshow' , ['place' => $place , 'favoritelists' => $favoritelist , 'reviews' => $reviews , 'userReview' => $userReview] );
 
     }
 
@@ -132,7 +146,7 @@ class placeController extends Controller
         ]);
 
         $place = place::find($id);
-
+        
         if ($place->update($placeData)) {
             return redirect('admin/places')->with(['message' => " place had been updated " , 'code' => 'success']);
         } else {

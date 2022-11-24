@@ -17,7 +17,7 @@
             <p class=" fade-in capitalize pb-2">City Name</p>
             <div class="flex justify-center w-full">
                 <form class="input-group relative flex w-full " action="{{ route('places.index') }}" method="GET">
-                    <input type="text" name="city"
+                    <input type="text" name="city" required
                         class="form-control  block w-full px-3 py-3.5 text-base font-normal  bg-white bg-clip-padding border border-solid border-gray-300 transition ease-in-out m-0 focus:bg-white focus:border-green-500 focus:outline-none"
                         placeholder="Search">
                     <input type="text" name="sort" value="asc" hidden>

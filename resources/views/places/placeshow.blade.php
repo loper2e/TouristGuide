@@ -2,7 +2,16 @@
 
 
 @section('structure')
-    <div class="h-screen w-screen">
+
+
+    <div class="h-full w-screen">
+
+        <div class="w-screen h-32 absolute">
+            <div class="ml-64 -mt-4">
+                @include('layouts.messagetoast')
+            </div>
+        </div>
+
         <div class="w-full flex justify-center items-start mx-auto px-5 md:px-14 mt-10">
 
             <div class="relative w-full h-[350px] md:h-[430px] md:w-[900px]">
@@ -48,7 +57,7 @@
                         <div class="flex items-center">
                             <h2 class=" text-4xl font-semibold mt-5 text-green-500 capitalize">{{ $place['name'] }}</h2>
                             @if (Auth::check())
-                                @if (in_array($place['id'], $favoritelists))
+                                @if ($favoritelists == true)
                                     <form class="mr-10 mt-7 ml-2" action='{{ route('favorites.destroy', $place['id']) }}'
                                         method="POST">
                                         @csrf
@@ -119,56 +128,245 @@
             </div>
         </div>
 
-    </div>
+
+
+        <div class="flex flex-col items-center w-full mt-20">
+
+
+            <h1 class="text-3xl"><span class="border-b-2 border-green-500 px-4">Reviews</span></h1>
+
+            <form class="px-5 w-full h-full pb-5 md:w-[900px] mt-10 rounded-lg bg-gray-50 p-5"
+                action="{{ route('reviews.store') }}" method="POST">
+                @csrf
+                <div class="w-full mb-4 border border-gray-200 rounded-lg bg-gray-50 ">
+                    <div class="px-4 py-2 bg-white rounded-t-lg ">
+                        <textarea name="content" rows="4" class="w-full outline-none px-0 text-sm text-gray-900 bg-white "
+                            placeholder="Write a Review..." required></textarea>
+                    </div>
+                    <input type="number" name="place_id" value="{{ $place['id'] }}" hidden>
+                    <input type="number" name="user_id" value="{{ isset(Auth::user()->id) ? Auth::user()->id : '' }}"
+                        hidden>
+                    <div class="flex items-center justify-between px-3 py-2 border-t border-gray-600">
+
+                        <div class=" z-50 text-2xl text-gray-400">
+                            @for ($i = 1; $i <= 5; $i++)
+                                @if ($i == 1)
+                                    <i class="bx bxs-star pr-1 text-yellow-500"
+                                        onclick="{starRate({{ $i - 1 }})}"><input checked id="star"
+                                            type="radio" hidden name="rating" value="{{ $i }}" /></i>
+                                @else
+                                    <i class="bx bxs-star pr-1 " onclick="{starRate({{ $i - 1 }})}"><input checked
+                                            id="star" type="radio" hidden name="rate"
+                                            value="{{ $i }}" /></i>
+                                @endif
+                            @endfor
+                        </div>
+
+                        @if (auth::check())
+                            <button type="submit"
+                                class=" py-2 px-4 text-md font-bold text-center text-white bg-green-400 hover:bg-green-500 rounded-full">
+                                Post Review
+                            </button>
+                        @else
+                            <h1 class="capitalize">You need to login, to review</h1>
+                            <a href="{{ route('user.index') }}"
+                                class=" py-2 px-4 text-md font-bold text-center text-white bg-green-400 hover:bg-green-500 rounded-full">
+                                Login
+                            </a>
+                        @endif
+                    </div>
+                </div>
+            </form>
+
+
+
+            @if ($userReview != null)
+                <form class="px-5 w-full h-full pb-5 md:w-[900px] mt-10 rounded-lg bg-green-100 p-5" method="POST"
+                    action="{{ route('reviews.update', $userReview['id']) }}">
+                    @csrf
+                    @method('PATCH')
+                    <h1 class="text-center font-bold text-xl capitalize">Your review</h1>
+                    <div class="flex items-center mb-4 space-x-4">
+                        <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-5.jpg"
+                            alt="">
+                        <div>
+                            <p class="text-xl capitalize p-0">{{ $userReview['username'] }}</p>
+                            <p class="text-gray-400 text-sm">{{ $userReview['created_at'] }}</p>
+                        </div>
+                    </div>
+                    <div class="flex items-center mb-1 text-gray-400">
+                        @for ($i = 1; $i <= 5; $i++)
+                            <i class="bx bxs-star pr-1 {{ $userReview['rate'] >= $i ? 'text-yellow-500' : '' }}"
+                                onclick="{estarRate({{ $i - 1 }})}"><input id="estar" type="radio" hidden
+                                    name="rate" value="{{ $i }}" /></i>
+                        @endfor
+                        <button type="button" onclick="{ estarRate({!! $userReview['rate'] - 1 !!})}"
+                            class="px-2 text-sm text-center text-gray-700 rounded-full">
+                            Reset
+                        </button>
+                    </div>
+                    <div class="mb-5 text-sm text-gray-700 ">
+                        <p>Reviewed in the <span class="uppercase">{{ $userReview['country'] }}</span>
+
+                        </p>
+                    </div>
+                    <div class="px-4 pt-5 pb-5 bg-white rounded-t-lg h-full">
+                        <textarea name="content" required class="w-full h-64 outline-none px-0 text-sm text-gray-900 bg-white "
+                            placeholder="Write a Review...">{{ $userReview['content'] }}</textarea>
+                    </div>
+                    <button type="submit"
+                        class=" mt-4 py-2 px-4 text-md font-bold text-center text-white bg-green-400 hover:bg-green-500 rounded-full">
+                        Update Review
+                    </button>
+
+                    <form action="{{ route('reviews.destroy' , $userReview['id']) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                            class=" mt-4 py-2 px-4 text-md font-bold text-center text-white bg-red-400 hover:bg-red-500 rounded-full">
+                            Delete
+                        </button>
+                    </form>
+
+                </form>
+            @endif
+
+            @if (!isset($reviews[0]))
+                <div class="w-full pb-96 mb-96 text-center pt-14">
+                    <div>
+                        <i class="bx bxs-award text-6xl"></i>
+                        <h1 class="text-4xl text-green-400 font-bold">No Reviews Found</h1>
+                        <p>There is no reviews for that place</p>
+                    </div>
+                </div>
+            @endif
+
+            @foreach ($reviews as $review)
+                @if (Auth::check() ? auth::user()->id != $review['user_id'] : true)
+                    <div class="px-5 w-full h-full md:w-[900px] mt-5 rounded-lg bg-gray-100 p-5">
+                        <div class="flex items-center mb-4 space-x-4">
+                            <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-5.jpg"
+                                alt="">
+                            <div>
+                                <p class="text-xl capitalize p-0">{{ $review['username'] }}</p>
+                                <p class="text-gray-400 text-sm">{{ $review['created_at'] }}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center mb-1">
+                            @for ($i = 1; $i <= $review['rate']; $i++)
+                                <i class="bx bxs-star pr-1 text-yellow-500"></i>
+                            @endfor
+                            @for ($i = 1; $i <= 5 - $review['rate']; $i++)
+                                <i class="bx bxs-star pr-1 text-gray-500"></i>
+                            @endfor
+                        </div>
+                        <div class="mb-3 text-sm text-gray-700 ">
+                            <p>Reviewed in the <span class="uppercase">{{ $review['country'] }}</span>
+                            </p>
+                        </div>
+                        <p id="textlong" class="h-24 bg-white p-2 pt-1  overflow-hidden font-light ">
+                            {{ $review['content'] }} </p>
+                        <button id="toglle"
+                            onclick="{
+                       const button = document.getElementById('toglle');
+                       const text = document.getElementById('textlong');
+                    if (text.classList.contains('h-full')) {
+                        text.classList.remove('h-full') 
+                        text.classList.add('h-24') 
+                        return button.textContent = 'Read more...';
+                    }
+                    text.classList.remove('h-24') 
+                    text.classList.add('h-full') 
+                    button.textContent = 'Read less';  
+                   
+                    }"
+                            class="block w-full p-2 pt-1 bg-white mb-5 text-left text-sm font-medium text-blue-500 hover:text-blue-600 {{ strlen($review['content']) >= 500 ? 'block' : 'hidden' }}">Read
+                            more...</button>
+                    </div>
+                @endif
+            @endforeach
+
+
+        </div>
 
 
 
 
 
 
-    <script>
-        let slideIndex = 1;
-        showSlide(slideIndex);
 
-        // change slide with the prev/next button
-        function moveSlide(moveStep) {
-            showSlide(slideIndex += moveStep);
-        }
 
-        // change slide with the dots
-        function currentSlide(n) {
-            showSlide(slideIndex = n);
-        }
 
-        function showSlide(n) {
-            let i;
-            const slides = document.getElementsByClassName("slide");
-            const dots = document.getElementsByClassName('dot');
+        <script>
+            let slideIndex = 1;
+            showSlide(slideIndex);
 
-            if (n > slides.length) {
-                slideIndex = 1
+            // change slide with the prev/next button
+            function moveSlide(moveStep) {
+                showSlide(slideIndex += moveStep);
             }
-            if (n < 1) {
-                slideIndex = slides.length
+
+            // change slide with the dots
+            function currentSlide(n) {
+                showSlide(slideIndex = n);
             }
 
-            // hide all slides
-            for (i = 0; i < slides.length; i++) {
-                slides[i].classList.add('hidden');
+            function showSlide(n) {
+                let i;
+                const slides = document.getElementsByClassName("slide");
+                const dots = document.getElementsByClassName('dot');
+
+                if (n > slides.length) {
+                    slideIndex = 1
+                }
+                if (n < 1) {
+                    slideIndex = slides.length
+                }
+
+                // hide all slides
+                for (i = 0; i < slides.length; i++) {
+                    slides[i].classList.add('hidden');
+                }
+
+                // remove active status from all dots
+                for (i = 0; i < dots.length; i++) {
+                    dots[i].classList.remove('bg-green-500');
+                    dots[i].classList.add('bg-gray-100');
+                }
+
+                // show the active slide
+                slides[slideIndex - 1].classList.remove('hidden');
+
+                // highlight the active dot
+                dots[slideIndex - 1].classList.remove('bg-gray-100');
+                dots[slideIndex - 1].classList.add('bg-green-400');
             }
 
-            // remove active status from all dots
-            for (i = 0; i < dots.length; i++) {
-                dots[i].classList.remove('bg-green-500');
-                dots[i].classList.add('bg-gray-100');
+
+            function starRate(id) {
+                const star = document.querySelectorAll('#star');
+                star[id].checked = true;
+                star[id].parentElement.style.color = '#eab308';
+                for (let i = id; i >= 0; i--) {
+                    star[i].parentElement.style.color = '#eab308';
+                }
+                for (let i = 1 + id; i <= 4; i++) {
+                    star[i].parentElement.style.color = '#9ca3af';
+                }
+
             }
 
-            // show the active slide
-            slides[slideIndex - 1].classList.remove('hidden');
+            function estarRate(id) {
+                const star = document.querySelectorAll('#estar');
+                star[id].checked = true;
+                star[id].parentElement.style.color = '#eab308';
+                for (let i = id; i >= 0; i--) {
+                    star[i].parentElement.style.color = '#eab308';
+                }
+                for (let i = 1 + id; i <= 4; i++) {
+                    star[i].parentElement.style.color = '#9ca3af';
+                }
 
-            // highlight the active dot
-            dots[slideIndex - 1].classList.remove('bg-gray-100');
-            dots[slideIndex - 1].classList.add('bg-green-400');
-        }
-    </script>
-@endsection
+            }
+        </script>
+    @endsection
