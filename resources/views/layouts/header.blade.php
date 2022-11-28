@@ -86,7 +86,7 @@
                         @if (Auth::user()->role == 'admin')
                             <li class=" text-gray-900 text-md py-2"><a class="flex items-center hover:text-green-400"
                                     href="{{ route('admin.index') }}">
-                                    <i class="bx bx-heart text-xl mr-5"></i>Admin</a>
+                                    <i class="bx bx-user text-xl mr-5"></i>Admin</a>
                             </li>
                         @endif
                         <li class=" text-gray-900 text-md py-2"><a class="flex items-center hover:text-green-400"

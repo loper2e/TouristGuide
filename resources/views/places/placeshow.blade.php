@@ -29,18 +29,15 @@
                     <img class="w-full h-[350px] md:h-[430px] " src="{{ $place['image3'] }}">
                 </div>
 
-                <!-- The previous button -->
                 <a class="absolute left-0 top-1/2 p-4 -translate-y-1/2 font-extrabold rounded-tr-full rounded-br-full text-4xl bg-opacity-40 bg-black text-gray-300 hover:text-green-500 cursor-pointer"
                     onclick="moveSlide(-1)">❮</a>
 
-                <!-- The next button -->
                 <a class="absolute right-0 top-1/2 p-4 -translate-y-1/2 rounded-tl-full rounded-bl-full font-extrabold text-4xl bg-opacity-40 bg-black text-gray-300 hover:text-green-500 cursor-pointer"
                     onclick="moveSlide(1)">❯</a>
 
             </div>
             <br>
 
-            <!-- The dots -->
             <div class="absolute top-80 md:top-96 pt-24 md:pt-32 flex justify-center items-center space-x-5">
                 <div class="dot w-4 h-4 rounded-full cursor-pointer" onclick="currentSlide(1)"></div>
                 <div class="dot w-4 h-4 rounded-full cursor-pointer" onclick="currentSlide(2)"></div>
@@ -55,7 +52,7 @@
                 <div>
                     <div class="flex items-center">
                         <div class="flex items-center">
-                            <h2 class=" text-4xl font-semibold mt-5 text-green-500 capitalize">{{ $place['name'] }}</h2>
+                            <h2 class="md:text-4xl text-2xl font-semibold mt-5 text-green-500 capitalize">{{ $place['name'] }}</h2>
                             @if (Auth::check())
                                 @if ($favoritelists == true)
                                     <form class="mr-10 mt-7 ml-2" action='{{ route('favorites.destroy', $place['id']) }}'
@@ -94,11 +91,11 @@
                             @endif
                         </div>
                         <div class="flex items-center mt-2">
-                            <h2 class=" text-xl font-semibold mt-5 capitalize"> <i
+                            <h2 class=" md:text-xl text-md font-semibold mt-5 capitalize"> <i
                                     class="bx bx-category-alt text-green-500 "></i>
                                 <span>{{ $place['type'] }}</span>
                             </h2>
-                            <h2 class="ml-4 text-xl font-semibold mt-5 capitalize"> <i
+                            <h2 class="ml-4 md:text-xl text-md font-semibold mt-5 capitalize"> <i
                                     class="bx bx-buildings text-green-500"> </i>
                                 <span>{{ $place['cityname'] }}</span>
                             </h2>
@@ -197,8 +194,9 @@
                         <div class="flex items-center mb-1 text-gray-400">
                             @for ($i = 1; $i <= 5; $i++)
                                 <i class="bx bxs-star pr-1 {{ $userReview['rate'] >= $i ? 'text-yellow-500' : '' }}"
-                                    onclick="{estarRate({{ $i - 1 }})}"><input id="estar" type="radio" {{ $userReview['rate'] == $i ? 'checked' : '' }}
-                                        hidden name="rate" value="{{ $i }}" /></i>
+                                    onclick="{estarRate({{ $i - 1 }})}"><input id="estar" type="radio"
+                                        {{ $userReview['rate'] == $i ? 'checked' : '' }} hidden name="rate"
+                                        value="{{ $i }}" /></i>
                             @endfor
                             <button type="button" onclick="{ estarRate({!! $userReview['rate'] - 1 !!})}"
                                 class="px-2 text-sm text-center text-gray-700 rounded-full">
@@ -222,7 +220,8 @@
 
 
                     </form>
-                    <form class="absolute bottom-5 left-44" action="{{ route('reviews.destroy', $userReview['id']) }}" method="POST">
+                    <form class="absolute bottom-5 left-44" action="{{ route('reviews.destroy', $userReview['id']) }}"
+                        method="POST">
                         @csrf
                         @method('DELETE')
                         <button type="submit"
@@ -244,7 +243,7 @@
             @endif
 
             @foreach ($reviews as $review)
-                @if (Auth::check() ? auth::user()->id != $review['user_id'] : true)
+                @if (Auth::check() ? Auth::user()->id != $review['user_id'] : true)
                     <div class="px-5 w-full h-full md:w-[900px] mt-5 rounded-lg bg-gray-100 p-5">
                         <div class="flex items-center mb-4 space-x-4">
                             <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-5.jpg"
@@ -292,83 +291,67 @@
         </div>
 
 
-
-
-
-
-
-
-
         <script>
             let slideIndex = 1;
             showSlide(slideIndex);
 
-            // change slide with the prev/next button
             function moveSlide(moveStep) {
-                showSlide(slideIndex += moveStep);
+                showSlide((slideIndex += moveStep));
             }
 
-            // change slide with the dots
             function currentSlide(n) {
-                showSlide(slideIndex = n);
+                showSlide((slideIndex = n));
             }
 
             function showSlide(n) {
                 let i;
                 const slides = document.getElementsByClassName("slide");
-                const dots = document.getElementsByClassName('dot');
+                const dots = document.getElementsByClassName("dot");
 
                 if (n > slides.length) {
-                    slideIndex = 1
+                    slideIndex = 1;
                 }
                 if (n < 1) {
-                    slideIndex = slides.length
+                    slideIndex = slides.length;
                 }
 
-                // hide all slides
                 for (i = 0; i < slides.length; i++) {
-                    slides[i].classList.add('hidden');
+                    slides[i].classList.add("hidden");
                 }
 
-                // remove active status from all dots
                 for (i = 0; i < dots.length; i++) {
-                    dots[i].classList.remove('bg-green-500');
-                    dots[i].classList.add('bg-gray-100');
+                    dots[i].classList.remove("bg-green-500");
+                    dots[i].classList.add("bg-gray-100");
                 }
 
-                // show the active slide
-                slides[slideIndex - 1].classList.remove('hidden');
+                slides[slideIndex - 1].classList.remove("hidden");
 
-                // highlight the active dot
-                dots[slideIndex - 1].classList.remove('bg-gray-100');
-                dots[slideIndex - 1].classList.add('bg-green-400');
+                dots[slideIndex - 1].classList.remove("bg-gray-100");
+                dots[slideIndex - 1].classList.add("bg-green-400");
             }
 
-
             function starRate(id) {
-                const star = document.querySelectorAll('#star');
+                const star = document.querySelectorAll("#star");
                 star[id].checked = true;
-                star[id].parentElement.style.color = '#eab308';
+                star[id].parentElement.style.color = "#eab308";
                 for (let i = id; i >= 0; i--) {
-                    star[i].parentElement.style.color = '#eab308';
+                    star[i].parentElement.style.color = "#eab308";
                 }
                 for (let i = 1 + id; i <= 4; i++) {
-                    star[i].parentElement.style.color = '#9ca3af';
+                    star[i].parentElement.style.color = "#9ca3af";
                 }
-
             }
 
             function estarRate(id) {
-                const star = document.querySelectorAll('#estar');
+                const star = document.querySelectorAll("#estar");
                 star[id].checked = true;
-                star[id].parentElement.style.color = '#eab308';
+                star[id].parentElement.style.color = "#eab308";
                 for (let i = id; i >= 0; i--) {
-                    star[i].parentElement.style.color = '#eab308';
+                    star[i].parentElement.style.color = "#eab308";
                 }
                 for (let i = 1 + id; i <= 4; i++) {
-                    star[i].parentElement.style.color = '#9ca3af';
+                    star[i].parentElement.style.color = "#9ca3af";
                 }
-
             }
         </script>
     @endsection

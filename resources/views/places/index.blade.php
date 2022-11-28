@@ -2,6 +2,10 @@
 
 
 @section('structure')
+
+
+
+
     @if (Request::is('favorites'))
         @include('layouts.filtter', ['page' => 'favorites'])
         <h1 class="text-center text-3xl uppercase"><span class="border-b-2 border-green-500 pb-2 px-5">Favorites</span></h1>
@@ -64,15 +68,15 @@
                     <a href="{{ route('places.show', $place['id']) }}">
                         <img alt="photo" src="{{ $place['mainimage'] }}" class="max-h-40 w-full object-cover" />
                         <div class="bg-white w-full p-4">
-                            <p class="text-green-500 text-2xl font-medium uppercase">
+                            <p class="text-green-500 text-xl md:text-2xl font-medium uppercase">
                                 {{ $place['name'] }}
                             </p>
                             <div class="flex mt-2 capitalize">
-                                <p class="text-gray-800 text-md font-medium mb-2  ">
+                                <p class="text-gray-800 text-sm md:text-md font-medium mb-2  ">
                                     <i class="bx bx-category-alt text-green-500 "></i> <span>{{ $place['type'] }}</span>
                                 </p>
 
-                                <div class="text-gray-800 text-md font-medium  pl-10 ">
+                                <div class="text-gray-800 text-sm md:text-md font-medium  pl-10 ">
                                     <i class="bx bx-buildings text-green-500"> </i> <span>{{ $place['cityname'] }}</span>
                                 </div>
                             </div>
@@ -85,32 +89,5 @@
                 </div>
             </div>
         @endforeach
-    </div>
-
-
-    <div id="popup-modal" tabindex="-1" class="hidden w-full h-full absolute top-10 z-50 p-4 ">
-        <div class=" max-w-md ">
-            <div class="relative bg-gray-100 rounded-lg shadow ">
-                <button type="button"
-                    class="absolute top-3 right-2 bg-transparent hover:bg-green-500  rounded-lg ml-auto inline-flex items-center"
-                    data-modal-toggle="popup-modal">
-                    <i class="bx bx-x text-3xl text-green-400 hover:text-white"></i>
-                </button>
-                <div class="p-6 text-center">
-                    <i class="bx bx-info-circle text-6xl"></i>
-                    <h3 class="mb-5 text-lg font-normal text-gray-700">You need to Login
-                    </h3>
-                    <div class="flex justify-center">
-
-                        <a href="{{ route('user.index') }}" data-modal-toggle="popup-modal" type="button"
-                            class="mt-5 mr-5 h-10 px-4 flex items-center text-lg text-white bg-green-400 hover:bg-green-500 ">Yes,
-                            login</a>
-                        <button data-modal-toggle="popup-modal" type="button"
-                            class="mt-5 h-10 px-4 flex items-center text-lg text-white bg-gray-400 hover:bg-gray-500 ">No,
-                            cancel</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 @endsection

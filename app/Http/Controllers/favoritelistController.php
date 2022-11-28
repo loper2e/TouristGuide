@@ -25,13 +25,13 @@ class favoritelistController extends Controller
         foreach ($favoritelists as $favoritelist) {
             
             if ($request->all() && $request->input('type') != null || $request->input('city') != null) {
-                $place = place::find($favoritelist['place_id'])->where('type' , '=' , $request->input('type'))->orWhere('cityname' , '=' , $request->input('city'))->orderBy( 'name' ,$request->input('sort'))->get();
+                $place = place::where('id', '=' ,$favoritelist['place_id'])->where('type' , '=' , $request->input('type'))->orWhere('cityname' , '=' , $request->input('city'))->orderBy( 'name' ,$request->input('sort'))->get();
                if (isset($place[0])) {
                     array_push($places , $place[0]);  
                }    
                 array_push($favoriteid , $favoritelist['place_id']);
             } else if (($request->input('type') == null && $request->input('city') == null) && $request->input('sort') == 'desc') {
-                $place = place::find($favoritelist['place_id'])->orderBy( 'name' , $request->input('sort'))->get();
+                $place = place::where('id', '=' ,$favoritelist['place_id'])->orderBy( 'name' , $request->input('sort'))->get();
                 if (isset($place[0])) {
                     array_push($places , $place[0]);  
                }  
