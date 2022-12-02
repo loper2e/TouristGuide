@@ -38,7 +38,7 @@
 
                                 <button type="submit">
                                     <div
-                                        class="absolute z-50 top-8 right-3 text-red-500 hover:text-gray-700 text-2xl w-10 h-10 rounded-full flex justify-center items-center">
+                                        class="absolute bg-white z-50 top-8 right-3 text-red-500  text-2xl w-8 h-8 rounded-full flex justify-center items-center">
                                         <i class="bx bxs-heart " type="solid"></i>
                                     </div>
                                 </button>
@@ -51,7 +51,7 @@
                                 <input type="number" name="user_id" hidden value="{{ Auth::user()->id }}">
                                 <button type="submit">
                                     <div
-                                        class="absolute z-50 top-8 right-3 text-gray-700 hover:text-red-500 text-2xl  w-10 h-10 rounded-full flex justify-center items-center">
+                                        class="absolute bg-white z-50 top-8 right-3 text-gray-700 hover:text-red-500 text-2xl  w-8 h-8 rounded-full flex justify-center items-center">
                                         <i class="bx bxs-heart " type="solid"></i>
                                     </div>
                                 </button>
@@ -60,7 +60,7 @@
                     @else
                         <a data-modal-toggle='popup-modal'>
                             <div
-                                class="absolute z-50 top-3 right-3 text-gray-700 hover:text-red-500 text-2xl  w-10 h-10 rounded-full flex justify-center items-center">
+                                class="absolute bg-white z-50 cursor-pointer top-3 right-3 text-gray-700 hover:text-red-500 text-2xl  w-8 h-8 rounded-full flex justify-center items-center">
                                 <i class="bx bxs-heart " type="solid"></i>
                             </div>
                         </a>

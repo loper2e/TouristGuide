@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
+
 use App\Models\User;
 use App\Models\place;
 use App\Models\favoritelist;
 use App\Models\review;
+use Illuminate\Database\Eloquent\Model;
 
 class adminController extends Controller
 {
@@ -18,13 +21,38 @@ class adminController extends Controller
      */
     public function index()
     {
+        function counterPercentage(Model $name)
+        {
+            $now = Carbon::now();
+            $yesterday = Carbon::yesterday();
+            $beforeyesterday = Carbon::now()->subDay(2);
+
+            $yesterdaycount = $name::whereBetween('created_at', [$beforeyesterday->toDateTimeString() , $yesterday->toDateTimeString()])->count();
+            $count = $name::whereBetween('created_at', [$yesterday->toDateTimeString() , $now->toDateTimeString()])->count();
+
+           if ($count == 0) {
+              return $result = 0;
+           } else {
+             $usersdiff = $count - $yesterdaycount ;
+              $result = $usersdiff / $count * 100;
+              return round($result, 2);
+           }
+       }
+
        if (Auth::check()) {
         if (Auth::user()->role == "admin") {
+
+
             $data = array(
                 'usercount' => User::count(),
+                'deffusercount' => counterPercentage(new User),
                 'placescount' => place::count(),
+                'deffplacescount' => counterPercentage(new place),
                 'favoritelistcount' => favoritelist::count(),
+                'defffavoritelistcount' => counterPercentage(new favoritelist),
                 'reviewcount' => review::count(),
+                'deffreviewcount' => counterPercentage(new review),
+                'placesdata' =>  place::with('review')->with('favorite')->paginate(5),
             );
             return view('admin.dashboard' , ['pages' => 'dashboard' , 'data' => $data ]);
            } else {
@@ -33,6 +61,9 @@ class adminController extends Controller
        } else {
         return redirect()->back();
        }
+
+
+       
     }
 
     /**
@@ -42,7 +73,7 @@ class adminController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -53,7 +84,7 @@ class adminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -64,6 +95,13 @@ class adminController extends Controller
      */
     public function show($pages , Request $request)
     {
+        if (!Auth::check()) {
+            return redirect()->back();
+        }
+        if (Auth::user()->role != 'admin') {
+            return redirect()->back();
+        }
+
         if ($pages == 'places') { 
             if ($request->all() && $request->input('type') != null || $request->input('city') != null) {
                 $places = place::where('type' , '=' , $request->input('type'))->orWhere('cityname' , '=' , $request->input('city'))->orderBy( 'name' ,$request->input('sort'))->get();
@@ -75,8 +113,9 @@ class adminController extends Controller
 
             return view('admin.dashboard' , ['pages' => $pages , 'places' => $places]);
         } else if ($pages == 'users') {
-            $users = user::all();
-            return view('admin.dashboard' , ['pages' => $pages , 'users' => $users]);
+            $users = user::where('role' , '=' , 'user')->get();
+            $admins = user::where('role' , '=' , 'admin')->get();
+            return view('admin.dashboard' , ['pages' => $pages , 'users' => $users , 'admins' => $admins]);
         }
     }
 
@@ -88,7 +127,7 @@ class adminController extends Controller
      */
     public function edit($id)
     {
-        //
+        
     }
 
     /**
@@ -100,7 +139,7 @@ class adminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        
     }
 
     /**
@@ -111,6 +150,6 @@ class adminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }

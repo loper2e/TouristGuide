@@ -14,4 +14,7 @@ class favoritelist extends Model
         'user_id',
     ];
 
+    public function place(){
+        return $this->belongsTo(place::class);
+    }
 }

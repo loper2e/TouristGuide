@@ -17,6 +17,9 @@ class favoritelistController extends Controller
      */
     public function index(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect('/');
+        }
 
         $favoritelists = favoritelist::where('user_id', '=' , Auth::user()->id)->get();
         $places = array();
@@ -25,8 +28,9 @@ class favoritelistController extends Controller
         foreach ($favoritelists as $favoritelist) {
             
             if ($request->all() && $request->input('type') != null || $request->input('city') != null) {
-                $place = place::where('id', '=' ,$favoritelist['place_id'])->where('type' , '=' , $request->input('type'))->orWhere('cityname' , '=' , $request->input('city'))->orderBy( 'name' ,$request->input('sort'))->get();
-               if (isset($place[0])) {
+                $place = place::find($favoritelist['place_id']);
+                if (isset($place[0])) {
+                   $place = place::where('id', $favoritelist['place_id'])->Where('type' , $request->input('type'))->orWhere('cityname' , $request->input('city'))->orderBy( 'name' ,$request->input('sort'))->get();
                     array_push($places , $place[0]);  
                }    
                 array_push($favoriteid , $favoritelist['place_id']);

@@ -17,6 +17,7 @@ class placeController extends Controller
      */
     public function index(Request $request)
     {
+       
         if ($request->all() && $request->input('type') != null || $request->input('city') != null) {
             $places = place::where('type' , '=' , $request->input('type'))->orWhere('cityname' , '=' , $request->input('city'))->orderBy( 'name' ,$request->input('sort'))->get();
         } else if (($request->input('type') == null && $request->input('city') == null) && $request->input('sort') == 'desc') {
@@ -45,7 +46,13 @@ class placeController extends Controller
      */
     public function create()
     {
-        return view('places.placeform');
+        if (Auth::check()) {
+            if (Auth::user()->role = 'admin') {
+                return view('places.placeform');
+            }
+        } else {
+            return redirect()->back();
+        }
     }
 
     /**

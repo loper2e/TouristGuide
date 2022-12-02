@@ -51,55 +51,54 @@
             <div class="w-full pb-5 md:w-[900px] md:px-8 bg-white shadow-lg rounded-lg ">
                 <div>
                     <div class="flex items-center">
-                        <div class="flex items-center">
-                            <h2 class="md:text-4xl text-2xl font-semibold mt-5 text-green-500 capitalize">{{ $place['name'] }}</h2>
-                            @if (Auth::check())
-                                @if ($favoritelists == true)
-                                    <form class="mr-10 mt-7 ml-2" action='{{ route('favorites.destroy', $place['id']) }}'
-                                        method="POST">
-                                        @csrf
-                                        @method('DELETE')
+                        <h2 class="md:text-4xl text-2xl font-semibold mt-5 text-green-500 capitalize">
+                            {{ $place['name'] }}</h2>
+                        @if (Auth::check())
+                            @if ($favoritelists == true)
+                                <form class="mr-10 mt-7 ml-2" action='{{ route('favorites.destroy', $place['id']) }}'
+                                    method="POST">
+                                    @csrf
+                                    @method('DELETE')
 
-                                        <button type="submit">
-                                            <div
-                                                class=" z-50 text-red-500 text-2xl hover:text-gray-700 bg-opacity-50 w-10 h-10 rounded-full flex justify-center items-center">
-                                                <i class="bx bxs-heart " type="solid"></i>
-                                            </div>
-                                        </button>
+                                    <button type="submit">
+                                        <div
+                                            class=" z-50 text-red-500 text-2xl bg-opacity-50 w-10 h-10 rounded-full flex justify-center items-center">
+                                            <i class="bx bxs-heart " type="solid"></i>
+                                        </div>
+                                    </button>
 
-                                    </form>
-                                @else
-                                    <form class="mr-10 mt-7 ml-2" action='{{ route('favorites.store') }}' method="POST">
-                                        @csrf
-                                        <input type="number" name="place_id" hidden value="{{ $place['id'] }}">
-                                        <input type="number" name="user_id" hidden value="{{ Auth::user()->id }}">
-                                        <button type="submit">
-                                            <div
-                                                class=" z-50 text-2xl text-gray-500 hover:text-red-500 w-10 h-10 flex justify-center items-center">
-                                                <i class="bx bxs-heart " type="solid"></i>
-                                            </div>
-                                        </button>
-                                    </form>
-                                @endif
+                                </form>
                             @else
-                                <a data-modal-toggle='popup-modal'>
-                                    <div
-                                        class="mr-10 mt-7 ml-2 z-50 text-gray-700 hover:text-red-500 text-2xl w-10 h-10 rounded-full flex justify-center items-center">
-                                        <i class="bx bxs-heart " type="solid"></i>
-                                    </div>
-                                </a>
+                                <form class="mr-10 mt-7 ml-2" action='{{ route('favorites.store') }}' method="POST">
+                                    @csrf
+                                    <input type="number" name="place_id" hidden value="{{ $place['id'] }}">
+                                    <input type="number" name="user_id" hidden value="{{ Auth::user()->id }}">
+                                    <button type="submit">
+                                        <div
+                                            class=" z-50 bg-white  text-2xl text-gray-500 hover:text-red-500 w-8 h-8 flex justify-center items-center">
+                                            <i class="bx bxs-heart " type="solid"></i>
+                                        </div>
+                                    </button>
+                                </form>
                             @endif
-                        </div>
-                        <div class="flex items-center mt-2">
-                            <h2 class=" md:text-xl text-md font-semibold mt-5 capitalize"> <i
-                                    class="bx bx-category-alt text-green-500 "></i>
-                                <span>{{ $place['type'] }}</span>
-                            </h2>
-                            <h2 class="ml-4 md:text-xl text-md font-semibold mt-5 capitalize"> <i
-                                    class="bx bx-buildings text-green-500"> </i>
-                                <span>{{ $place['cityname'] }}</span>
-                            </h2>
-                        </div>
+                        @else
+                            <a data-modal-toggle='popup-modal'>
+                                <div
+                                    class="mr-10 bg-white mt-7 ml-2 cursor-pointer z-50 text-gray-700  hover:text-red-500  text-2xl w-8 h-8 rounded-full flex justify-center items-center">
+                                    <i class="bx bxs-heart " type="solid"></i>
+                                </div>
+                            </a>
+                        @endif
+                    </div>
+                    <div class="flex items-center mt-2">
+                        <h2 class=" md:text-xl text-md font-semibold mt-5 capitalize"> <i
+                                class="bx bx-buildings text-green-500"> </i>
+                            <span>{{ $place['cityname'] }}</span>
+                        </h2>
+                        <h2 class="ml-4 md:text-xl text-md font-semibold mt-5 capitalize"> <i
+                                class="bx bx-category-alt text-green-500 "></i>
+                            <span>{{ $place['type'] }}</span>
+                        </h2>
 
                     </div>
                     <div class="flex flex-col md:flex-row">
@@ -113,7 +112,7 @@
                                 <span class="font-bold">Details: </span>{{ $place['details'] }}
                             </p>
                         </div>
-                        <div class="md:ml-14 mt-4 w-[400px] h-[300px] bg-gray-100 p-2">
+                        <div class="md:ml-14 w-[400px] h-[300px] bg-gray-100 p-2">
 
                             <iframe width="100%" height="100%" frameborder="0" marginheight="0" marginwidth="0"
                                 title="map" scrolling="no"
@@ -179,7 +178,7 @@
 
             @if ($userReview != null)
                 <div class="relative">
-                    <form class="px-5 w-full h-full pb-5 md:w-[900px] mt-10 rounded-lg bg-green-100 p-5" method="POST"
+                    <form class="px-5 w-[450px] h-full pb-5 md:w-[900px] mt-10 rounded-lg bg-green-100 p-5" method="POST"
                         action="{{ route('reviews.update', $userReview['id']) }}">
                         @csrf
                         @method('PATCH')
@@ -244,13 +243,13 @@
 
             @foreach ($reviews as $review)
                 @if (Auth::check() ? Auth::user()->id != $review['user_id'] : true)
-                    <div class="px-5 w-full h-full md:w-[900px] mt-5 rounded-lg bg-gray-100 p-5">
+                    <div class="px-5 w-[450px] h-full md:w-[900px] mt-5 rounded-lg bg-gray-100 p-5">
                         <div class="flex items-center mb-4 space-x-4">
                             <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-5.jpg"
                                 alt="">
                             <div>
                                 <p class="text-xl capitalize p-0">{{ $review['username'] }}</p>
-                                <p class="text-gray-400 text-sm">{{ $review['created_at'] }}</p>
+                                <p class="text-gray-500 text-sm">{{ $review['created_at'] }}</p>
                             </div>
                         </div>
                         <div class="flex items-center mb-1">
@@ -265,7 +264,7 @@
                             <p>Reviewed in the <span class="uppercase">{{ $review['country'] }}</span>
                             </p>
                         </div>
-                        <p id="textlong" class="h-24 bg-white p-2 pt-1  overflow-hidden font-light ">
+                        <p id="textlong" class="h-24 bg-white p-1 overflow-hidden font-light ">
                             {{ $review['content'] }} </p>
                         <button id="toglle"
                             onclick="{
@@ -307,7 +306,7 @@
                 let i;
                 const slides = document.getElementsByClassName("slide");
                 const dots = document.getElementsByClassName("dot");
-
+                console.log(dots);
                 if (n > slides.length) {
                     slideIndex = 1;
                 }
@@ -320,7 +319,7 @@
                 }
 
                 for (i = 0; i < dots.length; i++) {
-                    dots[i].classList.remove("bg-green-500");
+                    dots[i].classList.remove("bg-green-400");
                     dots[i].classList.add("bg-gray-100");
                 }
 
@@ -329,6 +328,11 @@
                 dots[slideIndex - 1].classList.remove("bg-gray-100");
                 dots[slideIndex - 1].classList.add("bg-green-400");
             }
+
+            setInterval(() => {
+                s = slideIndex + 1;
+                currentSlide(s)
+            }, 5000);
 
             function starRate(id) {
                 const star = document.querySelectorAll("#star");

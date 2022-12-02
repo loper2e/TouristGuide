@@ -4,8 +4,10 @@
 
 <div class="p-10 w-full ">
     @foreach ($places as $place)
-        <div class="w-full h-44 flex mb-5 duration-200 transition-transform ease-in-out hover:scale-105">
-            <img width="340px" src="{{ $place['mainimage'] }}" alt="">
+        <div class="w-full h-full flex mb-5 duration-200 transition-transform ease-in-out hover:scale-105">
+            <div class="w-[450px] h-full">
+                <img src="{{ $place['mainimage'] }}" alt="">
+            </div>
             <div class="w-full border border-green-400 bg-white p-4 flex flex-col justify-between leading-normal">
                 <div class="mb-4">
                     <div class="flex justify-between">

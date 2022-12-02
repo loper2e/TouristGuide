@@ -30,6 +30,7 @@
 </style>
 
 <body class="h-screen w-screen 2xl:container mx-auto">
+    
     <div class="flex h-full w-full ">
         <div class="w-1/5 ">
             @include('admin.sidebar')

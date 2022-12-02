@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
-use Stevebauman\Location\Facades\Location;
 
 class userController extends Controller
 {
@@ -22,7 +21,7 @@ class userController extends Controller
 
            $values = $request->only('email' , 'password');
            if (Auth::attempt($values)) {
-             return redirect(back()->getTargetUrl());
+             return redirect()->back();
            } else {
              return view('auth.login' , ['error' => 'Wrong Email or Password']);
            }
@@ -45,9 +44,9 @@ class userController extends Controller
 
         $userData = $request->validate(
             [
-                'firstname' => ['required' , 'max:20' ],
+                'firstname' => ['required' ,'max:20' ],
                 'lastname' => ['required' , 'max:20' ],
-                'username' => ['required' , 'unique:users,username,expect,id' ],
+                'username' => ['required' , 'min:8', 'unique:users,username,expect,id' ],
                 'email' => ['required' , 'email' , 'unique:users,email,expect,id' ],
                 'password' => ['required' , 'min:8'  ],
                 'gender' => ['required'],
@@ -70,7 +69,7 @@ class userController extends Controller
     public function show($id)
     {
         Auth::logout();
-        return redirect('/');
+        return redirect()->back();
     }
 
 
@@ -82,7 +81,14 @@ class userController extends Controller
     
     public function update(Request $request, $id)
     {
-        //
+        $checkAdmin = User::where('role', 'admin')->get();
+     
+        if (count($checkAdmin) == 5 && $request->input('role') == 'admin') {
+            return redirect()->back()->with(['message' => "You have reached maximum admins" , 'code' => 'error']);
+        } else {
+            User::where('id',$id)->update(["role" => $request->input('role')]);
+            return redirect()->back();
+        }
     }
 
 

@@ -1,6 +1,8 @@
 <div class="w-56 bg-gray-100 rounded-r-3xl overflow-hidden h-full">
     <div class="flex items-center justify-center h-20 shadow-md">
-        <h1 class="uppercase text-2xl "><span class="bg-green-500 p-2 text-white">tourist</span> guide</h1>
+        <a href="/">
+            <h1 class="uppercase text-2xl "><span class="bg-green-500 p-2 text-white">tourist</span> guide</h1>
+        </a>
     </div>
     <ul class="py-4">
         <div class="text-sm font-light tracking-wide text-gray-500 ml-4">Menu</div>

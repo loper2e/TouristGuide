@@ -16,6 +16,10 @@ class review extends Model
     'username', 
     'country', 
     'userimage',
-     'rate', 
+    'rate', 
     ];
+
+    public function place(){
+        return $this->belongsTo(place::class);
+    }
 }

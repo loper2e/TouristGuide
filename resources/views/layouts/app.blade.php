@@ -35,11 +35,11 @@
 
     <div id="popup-modal" tabindex="-1" class="hidden w-full h-full absolute top-10 z-50 p-4 ">
         <div class=" max-w-md ">
-            <div class="relative bg-gray-100 rounded-lg shadow ">
+            <div class="relative bg-gray-100 rounded-lg shadow w-[400px] h-[250px]">
                 <button type="button"
-                    class="absolute top-3 right-2 bg-transparent hover:bg-green-500  rounded-lg ml-auto inline-flex items-center"
+                    class="absolute top-3 right-2 bg-transparent  rounded-lg ml-auto inline-flex items-center"
                     data-modal-toggle="popup-modal">
-                    <i class="bx bx-x text-3xl text-green-400 hover:text-white"></i>
+                    <i class="bx bx-x text-3xl text-green-400 hover:text-green-600"></i>
                 </button>
                 <div class="p-6 text-center">
                     <i class="bx bx-info-circle text-6xl"></i>
