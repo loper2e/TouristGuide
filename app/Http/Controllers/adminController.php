@@ -44,16 +44,22 @@ class adminController extends Controller
        if (Auth::check()) {
         if (Auth::user()->role == "admin") {
 
+            $now = Carbon::now();
+            $yesterday = Carbon::yesterday();
 
             $data = array(
                 'usercount' => User::count(),
                 'deffusercount' => counterPercentage(new User),
+                'todayusers' => User::whereBetween('created_at', [$yesterday->toDateTimeString() , $now->toDateTimeString()])->count(),
                 'placescount' => place::count(),
                 'deffplacescount' => counterPercentage(new place),
+                'todayplaces' =>  place::whereBetween('created_at', [$yesterday->toDateTimeString() , $now->toDateTimeString()])->count(),
                 'favoritelistcount' => favoritelist::count(),
                 'defffavoritelistcount' => counterPercentage(new favoritelist),
+                'todayfav' => favoritelist::whereBetween('created_at', [$yesterday->toDateTimeString() , $now->toDateTimeString()])->count(),
                 'reviewcount' => review::count(),
                 'deffreviewcount' => counterPercentage(new review),
+                'todayreview' => review::whereBetween('created_at', [$yesterday->toDateTimeString() , $now->toDateTimeString()])->count(),
                 'placesdata' =>  place::with('review')->with('favorite')->paginate(5),
             );
             return view('admin.dashboard' , ['pages' => 'dashboard' , 'data' => $data ]);

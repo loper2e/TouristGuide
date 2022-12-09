@@ -11,11 +11,14 @@
                         <span class="flex items-center">{{ $data['deffusercount'] }}%</span>
                     </div>
                 </div>
-                <div class="ml-2 w-full flex-1">
+                <div class="ml-2 w-full flex-1 flex justify-between">
                     <div>
                         <div class="mt-3 text-3xl font-bold leading-8">{{ $data['usercount'] }}</div>
-
                         <div class="mt-1 text-base text-gray-600">Users</div>
+                    </div>
+                    <div>
+                        <div class="mt-3 text-2xl font-bold leading-8">{{ $data['todayusers'] }}</div>
+                        <div class="mt-1 text-sm text-gray-600">Today</div>
                     </div>
                 </div>
             </div>
@@ -30,11 +33,15 @@
                         <span class="flex items-center">{{ $data['deffplacescount'] }}%</span>
                     </div>
                 </div>
-                <div class="ml-2 w-full flex-1">
+                <div class="ml-2 w-full flex-1 flex justify-between">
                     <div>
                         <div class="mt-3 text-3xl font-bold leading-8">{{ $data['placescount'] }}</div>
 
                         <div class="mt-1 text-base text-gray-600">Places</div>
+                    </div>
+                    <div>
+                        <div class="mt-3 text-2xl font-bold leading-8">{{ $data['todayplaces'] }}</div>
+                        <div class="mt-1 text-sm text-gray-600">Today</div>
                     </div>
                 </div>
             </div>
@@ -49,11 +56,15 @@
                         <span class="flex items-center">{{ $data['defffavoritelistcount'] }}%</span>
                     </div>
                 </div>
-                <div class="ml-2 w-full flex-1">
+                <div class="ml-2 w-full flex-1 flex justify-between">
                     <div>
                         <div class="mt-3 text-3xl font-bold leading-8">{{ $data['favoritelistcount'] }}</div>
 
                         <div class="mt-1 text-base text-gray-600">Favorite Lists</div>
+                    </div>
+                    <div>
+                        <div class="mt-3 text-2xl font-bold leading-8">{{ $data['todayfav'] }}</div>
+                        <div class="mt-1 text-sm text-gray-600">Today</div>
                     </div>
                 </div>
             </div>
@@ -64,15 +75,19 @@
                 <div class="flex justify-between">
                     <i class="bx bx-star text-2xl"></i>
                     <div
-                    class="{{ $data['deffreviewcount'] > 0 ? 'bg-green-500' : 'bg-red-500' }} rounded-full h-6 px-2 flex justify-items-center text-white font-semibold text-sm">
-                    <span class="flex items-center">{{ $data['deffreviewcount'] }}%</span>
+                        class="{{ $data['deffreviewcount'] > 0 ? 'bg-green-500' : 'bg-red-500' }} rounded-full h-6 px-2 flex justify-items-center text-white font-semibold text-sm">
+                        <span class="flex items-center">{{ $data['deffreviewcount'] }}%</span>
+                    </div>
                 </div>
-                </div>
-                <div class="ml-2 w-full flex-1">
+                <div class="ml-2 w-full flex-1 flex justify-between">
                     <div>
                         <div class="mt-3 text-3xl font-bold leading-8">{{ $data['reviewcount'] }}</div>
 
                         <div class="mt-1 text-base text-gray-600">Reviews</div>
+                    </div>
+                    <div>
+                        <div class="mt-3 text-2xl font-bold leading-8">{{ $data['todayreview'] }}</div>
+                        <div class="mt-1 text-sm text-gray-600">Today</div>
                     </div>
                 </div>
             </div>
