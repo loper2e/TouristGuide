@@ -36,7 +36,7 @@
                         <td class="px-6 whitespace-no-wrap border-b border-gray-200">{{ $admin->id }}
                         </td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 capitalize">
-                            <img class="rounded-full" width="50px" height="50px" src=" {{ $admin->imageurl }}"
+                            <img class="rounded-full" width="50px" height="50px" src=" {{ $admin->image }}"
                                 alt="">
                         </td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 capitalize">
@@ -117,7 +117,7 @@
                         <td class="px-6 whitespace-no-wrap border-b border-gray-200">{{ $user->id }}
                         </td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 capitalize">
-                            <img class="rounded-full" width="50px" height="50px" src=" {{ $user->imageurl }}"
+                            <img class="rounded-full" width="50px" height="50px" src=" {{ $user->image }}"
                                 alt="">
                         </td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 capitalize">

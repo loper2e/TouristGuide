@@ -121,7 +121,7 @@ class adminController extends Controller
 
             return view('admin.dashboard' , ['pages' => $pages , 'places' => $places]);
         } else if ($pages == 'users') {
-            $users = user::where('role' , '=' , 'user')->paginate(10);
+            $users = user::where('role' , '=' , 'user')->orderBy( 'id' ,'desc')->paginate(10);
             $admins = user::where('role' , '=' , 'admin')->get();
             return view('admin.dashboard' , ['pages' => $pages , 'users' => $users , 'admins' => $admins]);
         } else if ($pages == 'reports'){

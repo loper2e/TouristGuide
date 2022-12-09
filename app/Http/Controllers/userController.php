@@ -54,8 +54,31 @@ class userController extends Controller
                 'confirmPassword' => ['required' , 'same:password'],
             ]
         );
-        
-       $registering =  user::create([ ...$userData,'password' => hash::make($request->input('password'))]);
+
+       function color($num) {
+            switch ($num) {
+                case 1:
+                   return '0D8ABC';
+                
+                case 2:
+                 return '006666';
+                 break;
+                case 3:
+                 return '282102';
+                 break;
+                case 4:
+                 return '464545';
+                 break;
+                case 5:
+                 return '38761d';
+                 break;
+                default:
+                return '464545';
+                break;
+            }
+        };
+        $num = rand(1,5);
+       $registering =  user::create([ ...$userData,'password' => hash::make($request->input('password')), 'image' => 'https://ui-avatars.com/api/?background='.color($num).'&color=fff&name='.$request->input('username')]);
 
         if($registering) {
             $values = $request->only('email' , 'password');

@@ -22,7 +22,7 @@
                         class="mr-3 flex items-center w-full md:w-auto ">
                         <h1 class="mr-2 text-ld font-bold">{{ Auth::user()->username }}</h1>
                         <div class=" bg-green-400 rounded-full " style="width: 45px; height: 45px">
-                            <img class="rounded-full" src="https://randomuser.me/api/portraits/men/50.jpg"
+                            <img class="rounded-full"  src="{{ Auth::user()->image  }}"
                                 alt="">
                         </div>
                     </button>
@@ -73,7 +73,7 @@
                     <div
                         class="bg-gradient-to-r from-green-700 to-green-600 transform flex items-center mb-10 py-8 px-6">
                         <img class="rounded-full w-14 h-14 ring-4 ring-opacity-80 ring-gray-200"
-                            src="https://randomuser.me/api/portraits/women/45.jpg" alt="Avatar Photo">
+                        src="{{ Auth::user()->image  }}" alt="Avatar Photo">
                         <div class="ml-5">
                             <h1 class="text-white tracking-wide text-lg">
                                 {{ Auth::user()->firstname . ' ' . Auth::user()->lastname }}</h1>
