@@ -47,10 +47,10 @@ class User extends Authenticatable
     ];
 
     public function review(){
-        return $this->hasMany('review');
+        return $this->hasMany(review::class);
     }
     public function favorite(){
-        return $this->hasMany('favoritelist');
+        return $this->hasMany(favoritelist::class);
     }
 
     public static function boot() {

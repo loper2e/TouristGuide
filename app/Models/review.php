@@ -19,7 +19,14 @@ class review extends Model
     'rate', 
     ];
 
+    public function report(){
+        return $this->hasMany(report::class);
+    }
+
     public function place(){
         return $this->belongsTo(place::class);
+    }
+    public function user(){
+        return $this->belongsTo(user::class);
     }
 }

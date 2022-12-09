@@ -36,7 +36,8 @@
                         <td class="px-6 whitespace-no-wrap border-b border-gray-200">{{ $admin->id }}
                         </td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 capitalize">
-                            <img class="rounded-full" width="50px" height="50px" src=" {{ $admin->imageurl }}" alt="">
+                            <img class="rounded-full" width="50px" height="50px" src=" {{ $admin->imageurl }}"
+                                alt="">
                         </td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 capitalize">
                             {{ $admin->username }}
@@ -116,7 +117,8 @@
                         <td class="px-6 whitespace-no-wrap border-b border-gray-200">{{ $user->id }}
                         </td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 capitalize">
-                           <img class="rounded-full" width="50px" height="50px" src=" {{ $user->imageurl }}" alt="">
+                            <img class="rounded-full" width="50px" height="50px" src=" {{ $user->imageurl }}"
+                                alt="">
                         </td>
                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 capitalize">
                             {{ $user->username }}
@@ -145,9 +147,8 @@
                                     @csrf
                                     @method('PATCH')
                                     <input type="text" name="role" value="admin" hidden>
-                                    <button type="submit" >
-                                        <i
-                                            class="bx bx-user-plus text-2xl text-green-500 hover:text-green-800 "></i>
+                                    <button type="submit">
+                                        <i class="bx bx-user-plus text-2xl text-green-500 hover:text-green-800 "></i>
                                     </button>
 
                                 </form>
@@ -157,5 +158,8 @@
                 @endforeach
             </tbody>
         </table>
+        <div class="px-10 py-5 mt-10">
+            {!! $users->links() !!}
+        </div>
     </div>
 </div>

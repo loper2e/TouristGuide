@@ -10,7 +10,9 @@ use App\Models\User;
 use App\Models\place;
 use App\Models\favoritelist;
 use App\Models\review;
+use App\Models\report;
 use Illuminate\Database\Eloquent\Model;
+use Termwind\Components\Dd;
 
 class adminController extends Controller
 {
@@ -84,7 +86,7 @@ class adminController extends Controller
      */
     public function store(Request $request)
     {
-        
+     
     }
 
     /**
@@ -113,9 +115,11 @@ class adminController extends Controller
 
             return view('admin.dashboard' , ['pages' => $pages , 'places' => $places]);
         } else if ($pages == 'users') {
-            $users = user::where('role' , '=' , 'user')->get();
+            $users = user::where('role' , '=' , 'user')->paginate(10);
             $admins = user::where('role' , '=' , 'admin')->get();
             return view('admin.dashboard' , ['pages' => $pages , 'users' => $users , 'admins' => $admins]);
+        } else if ($pages == 'reports'){
+        
         }
     }
 

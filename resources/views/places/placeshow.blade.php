@@ -204,8 +204,8 @@
                         </div>
                         <div class="mb-5 text-sm text-gray-700 ">
                             <p>From <span class="uppercase">{{ $userReview['country'] }}</span>
-
                             </p>
+
                         </div>
                         <div class="px-4 pt-5 pb-5 bg-white rounded-t-lg h-full">
                             <textarea name="content" required class="w-full h-64 outline-none px-0 text-sm text-gray-900 bg-white "
@@ -260,7 +260,7 @@
                                 <i class="bx bxs-star pr-1 text-gray-500"></i>
                             @endfor
                         </div>
-                        <div class="mb-3 text-sm text-gray-700 ">
+                        <div class="mb-3 text-sm text-gray-700">
                             <p>Reviewed in the <span class="uppercase">{{ $review['country'] }}</span>
                             </p>
                         </div>

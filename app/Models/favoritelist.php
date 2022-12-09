@@ -17,4 +17,7 @@ class favoritelist extends Model
     public function place(){
         return $this->belongsTo(place::class);
     }
+    public function user(){
+        return $this->belongsTo(user::class);
+    }
 }
