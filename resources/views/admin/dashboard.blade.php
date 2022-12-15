@@ -44,6 +44,9 @@
                 @case('places')
                     @include('admin.pages.placespage')
                 @break
+                @case('support')
+                    @include('admin.pages.supportpage')
+                @break
 
                 @default
                     @include('admin.pages.dashboardpage')

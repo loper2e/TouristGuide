@@ -245,7 +245,7 @@
                 @if (Auth::check() ? Auth::user()->id != $review['user_id'] : true)
                     <div class="px-5 w-[450px] h-full md:w-[900px] mt-5 rounded-lg bg-gray-100 p-5">
                         <div class="flex items-center mb-4 space-x-4">
-                            <img class="w-10 h-10 rounded-full" src="/docs/images/people/profile-picture-5.jpg"
+                            <img class="w-10 h-10 rounded-full" src="{{  $review['userimage'] }}"
                                 alt="">
                             <div>
                                 <p class="text-xl capitalize p-0">{{ $review['username'] }}</p>

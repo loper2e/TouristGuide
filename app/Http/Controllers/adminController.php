@@ -10,9 +10,9 @@ use App\Models\User;
 use App\Models\place;
 use App\Models\favoritelist;
 use App\Models\review;
-use App\Models\report;
+use App\Models\support;
 use Illuminate\Database\Eloquent\Model;
-use Termwind\Components\Dd;
+
 
 class adminController extends Controller
 {
@@ -124,8 +124,9 @@ class adminController extends Controller
             $users = user::where('role' , '=' , 'user')->orderBy( 'id' ,'desc')->paginate(10);
             $admins = user::where('role' , '=' , 'admin')->get();
             return view('admin.dashboard' , ['pages' => $pages , 'users' => $users , 'admins' => $admins]);
-        } else if ($pages == 'reports'){
-        
+        } else if ($pages == 'support'){
+            $messages = support::orderBy( 'id' ,'desc')->paginate(10);
+            return view('admin.dashboard' , ['pages' => $pages , 'messages' => $messages]);
         }
     }
 

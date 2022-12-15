@@ -8,6 +8,7 @@
             <ul class="hidden md:flex px-4 mx-auto font-semibold font-heading space-x-12 capitalize">
                 <li><a class="hover:text-green-400 pl-2 {{ Request::is('/') ? 'font-bold border-l-4 border-green-500' : ''}}" href="/">Home</a></li>
                 <li><a class="hover:text-green-400 pl-2 {{ Request::is('places') ? 'font-bold border-l-4 border-green-500' : ''}}" href="{{ route('places.index') }}">Places</a></li>
+                <li><a class="hover:text-green-400 pl-2 {{ Request::is('support') ? 'font-bold border-l-4 border-green-500' : ''}}" href="{{ route('support.index') }}">Support</a></li>
                 @if (Auth::user())
                     @if (Auth::user()->role == 'admin')
                         <li><a class="hover:text-green-400" href="{{ route('admin.index') }}">Admin</a></li>

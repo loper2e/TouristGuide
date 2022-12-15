@@ -7,6 +7,7 @@ use App\Http\Controllers\adminController;
 use App\Http\Controllers\placeController;
 use App\Http\Controllers\favoritelistController;
 use App\Http\Controllers\reviewController;
+use App\Http\Controllers\supportController;
 
 
 Route::get('/', function () {
@@ -20,6 +21,8 @@ Route::resource('places', placeController::class);
 Route::resource('favorites', favoritelistController::class);
 
 Route::resource('reviews', reviewController::class);
+
+Route::resource('support', supportController::class);
 
 Route::resource('user', userController::class);
 
